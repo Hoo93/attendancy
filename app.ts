@@ -1,6 +1,4 @@
-import exp from "constants";
 import express from "express";
-import "reflect-metadata";
 import Container, { Service } from "typedi";
 
 export class App {
