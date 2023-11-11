@@ -6,3 +6,10 @@ export interface Dbconfig extends PoolOptions {
   password: string;
   database: string;
 }
+
+export const dbconfig = {
+  host: "localhost",
+  user: "root",
+  password: "test",
+  database: "attendance_express",
+};

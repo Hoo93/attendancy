@@ -1,12 +1,21 @@
 import express from "express";
 import Container, { Service } from "typedi";
+import { Database } from "./src/dbms/\bdatabase";
+import { Dbconfig } from "./src/dbms/database.option";
+import userRouter from "./src/User/user.route";
 
 export class App {
   private readonly app: express.Application;
 
-  constructor(port: number) {
+  constructor(port: number, dbconfig: Dbconfig) {
+    Database.initialize(dbconfig);
     this.app = express();
+    this.initializeRouter();
     this.listen(port);
+  }
+
+  private initializeRouter() {
+    this.app.use("/user", userRouter);
   }
 
   private listen(port: number) {
