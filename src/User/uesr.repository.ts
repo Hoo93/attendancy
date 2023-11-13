@@ -1,6 +1,5 @@
 import { Service } from "typedi";
-import Repository from "../dbms/respository.interface";
-import RepositoryInterface from "../dbms/respository.interface";
+import Repository from "../dbms/default-repository";
 import User from "./user";
 
 @Service()
