@@ -15,6 +15,10 @@ export class CreateUserDto {
     this.phoneNumber = phoneNumber;
     this.email = email;
   }
+
+  validationName() {
+    return;
+  }
 }
 
 export default CreateUserDto;
