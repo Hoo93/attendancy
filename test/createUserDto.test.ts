@@ -83,9 +83,20 @@ describe("CreateUserDto 테스트", () => {
     })
 
     it("영문,숫자,특수기호를 1개 이상 포함한 경우 true 반환.", () => {
-      let englishPassword = 'proper123!'
-      let createUserDto = new CreateUserDto(name,englishPassword,age,phoneNumber,email)
+      let properPassword = 'proper123!'
+      let createUserDto = new CreateUserDto(name,properPassword,age,phoneNumber,email)
       expect(createUserDto.validatePassword()).toBe(true)
+    })
+
+    it.each([
+        ['한글비밀번호',false],
+        ['onlyEnglish',false],
+        ['한글비밀번호와123',false],
+        ['english123',false],
+        ['engAnd123##',true],
+    ]) ('패스워드가 %s인 경우 %p 반환', (password,expected) => {
+      const createUserDto = new CreateUserDto(name,password,age,phoneNumber,email)
+      expect(password).toBe(expected)
     })
   })
 });
