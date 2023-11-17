@@ -38,4 +38,18 @@ describe("CreateUserDto 테스트", () => {
 
     });
   });
+
+  describe('validationPassword 테스트', () => {
+    const name = "박상후";
+    const password = "pwd";
+    const age = 30;
+    const phoneNumber = "010-8098-1398";
+    const email = "sksk8922@gmail.com";
+
+    it("패스워드는 6글자 이상이어야 합니다." , () => {
+      let shortPassword = 'short'
+      let createUserDto = new CreateUserDto(name,shortPassword,age,phoneNumber,email)
+      expect(createUserDto.validationPassword()).toBe(false)
+    })
+  })
 });
