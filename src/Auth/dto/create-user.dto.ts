@@ -23,7 +23,7 @@ export class CreateUserDto {
   }
 
   validatePassword():Boolean {
-    return /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#*])$/.test(this.password);
+    return /^(?=.*?[a-zA-Z])(?=.*?\d)(?=.*?[!@#$%^&*]).{6,13}$/.test(this.password);
   }
 
   validatePasswordLength() {
