@@ -38,7 +38,7 @@ describe("CreateUserDto 테스트", () => {
     });
   });
 
-  describe('validationPassword 테스트', () => {
+  describe('validatePasswordLength 테스트' , () => {
     const name = "박상후";
     const password = "pwd";
     const age = 30;
@@ -48,14 +48,33 @@ describe("CreateUserDto 테스트", () => {
     it("6글자 미만 패스워드는 false를 반환합니다." , () => {
       let shortPassword = 'short'
       let createUserDto = new CreateUserDto(name,shortPassword,age,phoneNumber,email)
-      expect(createUserDto.validationPassword()).toBe(false)
+      expect(createUserDto.validatePasswordLength()).toBe(false)
     })
 
     it("12글자 초과 패스워드는 false를 반환합니다." , () => {
-      let longPassword = 'twelveLetter'
+      let longPassword = 'twelve letter'
       let createUserDto = new CreateUserDto(name,longPassword,age,phoneNumber,email)
-      expect(createUserDto.validationPassword()).toBe(false)
+      expect(createUserDto.validatePasswordLength()).toBe(false)
     })
+
+    it.each([
+        ["short", false],
+        ["too long password", false],
+        ["appropriate", true],
+        ["twelveLetter",true],
+        ["letter",true]
+    ]) ('글자수가 %s인 경우 %p를 반환', (password,expected) => {
+      const createUserDto = new CreateUserDto(name,password,age,phoneNumber,email)
+      expect(createUserDto.validatePasswordLength()).toBe(expected)
+    })
+  })
+
+  describe('validationPassword 테스트', () => {
+    const name = "박상후";
+    const password = "pwd";
+    const age = 30;
+    const phoneNumber = "010-8098-1398";
+    const email = "sksk8922@gmail.com";
 
     it("패스워드는 1개 이상의 영문과 숫자 그리고 (!,@,#,*)의 특수기호를 포함해야 합니다.", () => {
       let englishPassword = 'onlyEnglish'
