@@ -69,17 +69,23 @@ describe("CreateUserDto 테스트", () => {
     })
   })
 
-  describe('validationPassword 테스트', () => {
+  describe('validatePassword 테스트', () => {
     const name = "박상후";
     const password = "pwd";
     const age = 30;
     const phoneNumber = "010-8098-1398";
     const email = "sksk8922@gmail.com";
 
-    it("패스워드는 1개 이상의 영문과 숫자 그리고 (!,@,#,*)의 특수기호를 포함해야 합니다.", () => {
+    it("영문,숫자,특수기호를 1개 이상 포함하지 않은 경우 false 반환", () => {
       let englishPassword = 'onlyEnglish'
       let createUserDto = new CreateUserDto(name,englishPassword,age,phoneNumber,email)
-      expect(createUserDto.validationPassword()).toBe(false)
+      expect(createUserDto.validatePassword()).toBe(false)
+    })
+
+    it("영문,숫자,특수기호를 1개 이상 포함한 경우 true 반환.", () => {
+      let englishPassword = 'proper123!'
+      let createUserDto = new CreateUserDto(name,englishPassword,age,phoneNumber,email)
+      expect(createUserDto.validatePassword()).toBe(true)
     })
   })
 });
