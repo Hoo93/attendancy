@@ -50,5 +50,17 @@ describe("CreateUserDto 테스트", () => {
       let createUserDto = new CreateUserDto(name,shortPassword,age,phoneNumber,email)
       expect(createUserDto.validationPassword()).toBe(false)
     })
+
+    it("패스워드는 12글자 이하이어야 합니다." , () => {
+      let longPassword = 'long long password'
+      let createUserDto = new CreateUserDto(name,longPassword,age,phoneNumber,email)
+      expect(createUserDto.validationPassword()).toBe(false)
+    })
+
+    it("패스워드는 영문과 숫자 그리고 (!,@,#,*)의 특수기호를 포함해야 합니다.", () => {
+      let englishPassword = 'onlyEnglish'
+      let createUserDto = new CreateUserDto(name,englishPassword,age,phoneNumber,email)
+      expect(createUserDto.validationPassword()).toBe(false)
+    })
   })
 });

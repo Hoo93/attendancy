@@ -19,6 +19,10 @@ export class CreateUserDto {
   validationName():Boolean {
     return /^[가-힣a-zA-Z0-9]+$/.test(this.name);
   }
+
+  validationPassword() {
+    return
+  }
 }
 
 export default CreateUserDto;
