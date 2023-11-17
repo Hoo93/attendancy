@@ -21,6 +21,11 @@ export class CreateUserDto {
   validationPassword():Boolean {
     return /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#*]).{6,13}$/.test(this.password);
   }
+현
+  validatePasswordLength() {
+    const passwordLength = this.password.length
+    return passwordLength >= 6 && passwordLength <= 12
+  }
 }
 
 export default CreateUserDto;
