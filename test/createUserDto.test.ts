@@ -45,19 +45,19 @@ describe("CreateUserDto 테스트", () => {
     const phoneNumber = "010-8098-1398";
     const email = "sksk8922@gmail.com";
 
-    it("패스워드는 6글자 이상이어야 합니다." , () => {
+    it("6글자 미만 패스워드는 false를 반환합니다." , () => {
       let shortPassword = 'short'
       let createUserDto = new CreateUserDto(name,shortPassword,age,phoneNumber,email)
       expect(createUserDto.validationPassword()).toBe(false)
     })
 
-    it("패스워드는 12글자 이하이어야 합니다." , () => {
-      let longPassword = 'long long password'
+    it("12글자 초과 패스워드는 false를 반환합니다." , () => {
+      let longPassword = 'twelveLetter'
       let createUserDto = new CreateUserDto(name,longPassword,age,phoneNumber,email)
       expect(createUserDto.validationPassword()).toBe(false)
     })
 
-    it("패스워드는 영문과 숫자 그리고 (!,@,#,*)의 특수기호를 포함해야 합니다.", () => {
+    it("패스워드는 1개 이상의 영문과 숫자 그리고 (!,@,#,*)의 특수기호를 포함해야 합니다.", () => {
       let englishPassword = 'onlyEnglish'
       let createUserDto = new CreateUserDto(name,englishPassword,age,phoneNumber,email)
       expect(createUserDto.validationPassword()).toBe(false)
