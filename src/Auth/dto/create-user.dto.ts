@@ -16,8 +16,8 @@ export class CreateUserDto {
     this.email = email;
   }
 
-  validationName() {
-    return;
+  validationName():Boolean {
+    return /^[가-힣a-zA-Z0-9]+$/.test(this.name);
   }
 }
 
