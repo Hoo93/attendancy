@@ -1,5 +1,3 @@
-import { IsNumber, IsString } from "class-validator";
-import User from "../../User/user";
 
 export class CreateUserDto {
   public readonly name: string;
