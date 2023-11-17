@@ -18,8 +18,8 @@ export class CreateUserDto {
     return /^[가-힣a-zA-Z0-9]+$/.test(this.name);
   }
 
-  validationPassword() {
-    return
+  validationPassword():Boolean {
+    return /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#*]).{6,13}$/.test(this.password);
   }
 }
 
