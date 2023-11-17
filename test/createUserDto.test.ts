@@ -34,8 +34,7 @@ describe("CreateUserDto 테스트", () => {
     ])('이름이 %s 인 경우 %p 반환', (name, expected) => {
       const createUserDto = new CreateUserDto(name, password, age, phoneNumber, email);
       const result = createUserDto.validationName();
-      expect(result).toBe(expected);
-
+      expect(result).toBe(expected)
     });
   });
 
