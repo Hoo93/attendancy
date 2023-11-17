@@ -96,7 +96,7 @@ describe("CreateUserDto 테스트", () => {
         ['engAnd123##',true],
     ]) ('패스워드가 %s인 경우 %p 반환', (password,expected) => {
       const createUserDto = new CreateUserDto(name,password,age,phoneNumber,email)
-      expect(password).toBe(expected)
+      expect(createUserDto.validatePassword()).toBe(expected)
     })
   })
 });
