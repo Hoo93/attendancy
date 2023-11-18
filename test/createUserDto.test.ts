@@ -144,9 +144,9 @@ describe("CreateUserDto 테스트", () => {
     ]) ('유효하지 않은 경우 Error를 발생시킵니다.' , (name,password,age,phoneNumber,email,errorMessage) => {
       const createUserDto = new CreateUserDto(name,password,age,phoneNumber,email)
       if (errorMessage) {
-        expect(createUserDto.validate()).toThrowError(errorMessage)
+        expect(() => createUserDto.validate()).toThrowError(errorMessage)
       } else {
-        expect(createUserDto.validate()).toReturn()
+        expect(() => createUserDto.validate()).toReturn()
       }
 
     } )
