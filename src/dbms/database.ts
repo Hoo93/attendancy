@@ -1,3 +1,4 @@
+
 import mysql, { Pool, PoolOptions } from "mysql2/promise";
 import { Dbconfig } from "./database.option";
 import { PoolConnection } from "mysql2/typings/mysql/lib/PoolConnection";
