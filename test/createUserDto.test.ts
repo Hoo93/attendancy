@@ -140,13 +140,20 @@ describe("CreateUserDto 테스트", () => {
     let INVALID_PASSWORD_ERROR_MESSAGE= '비밀번호는 영어,숫자,특수기호를 1개 이상 포함해야 합니다.'
     let INVALID_EMAIL_ERROR_MESSAGE = '이메일 주소가 유효하지 않습니다.'
     it.each([
-        ["이름",'valid123!@#',31,'010-8098-1398','email@email.com',INVALID_NAME_LENGTH_ERROR_MESSAGE]
+      ["이름", 'valid123!@#', 31, '010-8098-1398', 'email@email.com', INVALID_NAME_LENGTH_ERROR_MESSAGE],
+      ["이름이 너무 길지 아니한가 !", 'valid123!@#', 31, '010-8098-1398', 'email@email.com', INVALID_NAME_LENGTH_ERROR_MESSAGE],
+      ["  !!3이름", 'valid123!@#', 31, '010-8098-1398', 'email@email.com', INVALID_NAME_ERROR_MESSAGE],
+      ["적절한이름", 'short', 31, '010-8098-1398', 'email@email.com', INVALID_PASSWORD_LENGTH_ERROR_MESSAGE],
+      ["적절한이름", 'thisPasswordIsTooLong', 31, '010-8098-1398', 'email@email.com', INVALID_PASSWORD_LENGTH_ERROR_MESSAGE],
+      ["적절한이름", 'notSpecial3', 31, '010-8098-1398', 'email@email.com', INVALID_PASSWORD_ERROR_MESSAGE],
+      ["적절한이름", '1proper@3', 31, '010-8098-1398', 'invalidmail', INVALID_EMAIL_ERROR_MESSAGE],
+      ["적절한이름", '1proper@3', 31, '010-8098-1398', 'email@email.com', undefined],
     ]) ('유효하지 않은 경우 Error를 발생시킵니다.' , (name,password,age,phoneNumber,email,errorMessage) => {
       const createUserDto = new CreateUserDto(name,password,age,phoneNumber,email)
       if (errorMessage) {
         expect(() => createUserDto.validate()).toThrowError(errorMessage)
       } else {
-        expect(() => createUserDto.validate()).toReturn()
+        expect(() => createUserDto.validate()).not.toThrow()
       }
 
     } )
