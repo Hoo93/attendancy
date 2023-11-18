@@ -6,6 +6,21 @@ describe("CreateUserDto 테스트", () => {
     expect(createUserDto.name).toBe("test");
   });
 
+  describe("validateNameLength 테스트", () => {
+    const name = "박상후";
+    const password = "pwd";
+    const age = 30;
+    const phoneNumber = "010-8098-1398";
+    const email = "sksk8922@gmail.com";
+
+    it("이름이 두 글자 이하인 경우 false 반환" ,()=> {
+      const shortName = '상후'
+      const createUserDto = new CreateUserDto(shortName, password, age, phoneNumber, email);
+      expect(createUserDto.validateNameLength()).toBe(false)
+
+    })
+  })
+
   describe("validationName 테스트", () => {
     const name = "박상후";
     const password = "pwd";
