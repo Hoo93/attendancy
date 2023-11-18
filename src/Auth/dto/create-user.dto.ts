@@ -18,8 +18,11 @@ export class CreateUserDto {
     this.email = email;
   }
 
-  validationName():Boolean {
+  validateName():Boolean {
     return /^[가-힣a-zA-Z0-9]+$/.test(this.name);
+  }
+  validateNameLength() {
+    return
   }
 
   validatePassword():Boolean {

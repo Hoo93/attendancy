@@ -21,7 +21,7 @@ describe("CreateUserDto 테스트", () => {
     })
   })
 
-  describe("validationName 테스트", () => {
+  describe("validateName 테스트", () => {
     const name = "박상후";
     const password = "pwd";
     const age = 30;
@@ -31,13 +31,13 @@ describe("CreateUserDto 테스트", () => {
     it("한글,영어,숫자로 이루어진 name은 true를 반환한다.", () => {
       let username = '박상후'
       const createUserDto = new CreateUserDto(username, password, age, phoneNumber, email);
-      expect(createUserDto.validationName()).toBe(true);
+      expect(createUserDto.validateName()).toBe(true);
     });
 
     it("한글,영어,숫자로 이루어지지 않은 이름은 false를 반환한다.", () => {
       let username = '박상후 !'
       const createUserDto = new CreateUserDto(username, password, age, phoneNumber, email);
-      expect(createUserDto.validationName()).toBe(false);
+      expect(createUserDto.validateName()).toBe(false);
     });
 
     it.each([
@@ -48,7 +48,7 @@ describe("CreateUserDto 테스트", () => {
       ['', false],
     ])('이름이 %s 인 경우 %p 반환', (name, expected) => {
       const createUserDto = new CreateUserDto(name, password, age, phoneNumber, email);
-      const result = createUserDto.validationName();
+      const result = createUserDto.validateName();
       expect(result).toBe(expected)
     });
   });
