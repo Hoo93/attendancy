@@ -42,7 +42,21 @@ export class CreateUserDto {
   }
 
   validate(): void {
-
+    if (!this.validateNameLength()) {
+      throw Error(`사용자 이름은 ${MIN_NAME_LENGTH} 이상 ${MAX_NAME_LENGTH} 이어야 합니다`)
+    }
+    if (!this.validateName()) {
+      throw Error ('사용자 이름은 한글,영어,숫자만 사용 가능합니다.')
+    }
+    if (!this.validatePasswordLength()) {
+      throw new Error(`비밀번호 길이는 ${MIN_PASSWORD_LENGTH} 이상 ${MAX_PASSWORD_LENGTH} 이어야 합니다`);
+    }
+    if (!this.validatePassword()) {
+      throw new Error('비밀번호는 영어,숫자,특수기호를 1개 이상 포함해야 합니다.');
+    }
+    if (!this.validateEmail()) {
+      throw new Error('이메일 주소가 유효하지 않습니다.');
+    }
     return
   }
 }
