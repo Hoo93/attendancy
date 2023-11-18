@@ -37,9 +37,19 @@ export class CreateUserDto {
     return passwordLength >= this.MIN_PASSWORD_LENGTH && passwordLength <= this.MAX_PASSWORD_LENGTH
   }
 
-  validateEmail() {
+  validateEmail():Boolean {
+    return /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/.test(this.email)
+  }
+
+  validate(): void {
+
     return
   }
 }
 
 export default CreateUserDto;
+export const MIN_PASSWORD_LENGTH = 3
+export const MAX_PASSWORD_LENGTH = 12
+export const MIN_NAME_LENGTH = 3
+export const MAX_NAME_LENGTH = 8
+

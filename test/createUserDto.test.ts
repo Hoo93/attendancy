@@ -1,4 +1,9 @@
-import CreateUserDto from "../src/Auth/dto/create-user.dto";
+import CreateUserDto, {
+  MAX_NAME_LENGTH,
+  MAX_PASSWORD_LENGTH,
+  MIN_NAME_LENGTH,
+  MIN_PASSWORD_LENGTH
+} from "../src/Auth/dto/create-user.dto";
 
 describe("CreateUserDto 테스트", () => {
   const name = "박상후";
@@ -114,7 +119,7 @@ describe("CreateUserDto 테스트", () => {
     })
   })
 
-  describe("validateEmail 테스트", () => {
+  describe("validateEmail 메소드 테스트", () => {
     it.each([
         ["sksk8922@gmail.com",true],
         ["thisIsFalse",false],
@@ -126,5 +131,24 @@ describe("CreateUserDto 테스트", () => {
       const createUserDto = new CreateUserDto(name,password,age,phoneNumber,email)
       expect(createUserDto.validateEmail()).toBe(expected)
     })
+  })
+
+  describe("validate 메소드 테스트", () => {
+    let INVALID_NAME_LENGTH_ERROR_MESSAGE = `사용자 이름은 ${MIN_NAME_LENGTH} 이상 ${MAX_NAME_LENGTH} 이어야 합니다`;
+    let INVALID_NAME_ERROR_MESSAGE = `사용자 이름은 한글,영어,숫자만 사용 가능합니다.`;
+    let INVALID_PASSWORD_LENGTH_ERROR_MESSAGE = `비밀번호 길이는 ${MIN_PASSWORD_LENGTH} 이상 ${MAX_PASSWORD_LENGTH} 이어야 합니다`
+    let INVALID_PASSWORD_ERROR_MESSAGE= '비밀번호는 영어,숫자,특수기호를 1개 이상 포함해야 합니다.'
+    let INVALID_EMAIL_ERROR_MESSAGE = '이메일 주소가 유효하지 않습니다.'
+    it.each([
+        ["이름",'valid123!@#',31,'010-8098-1398','email@email.com',INVALID_NAME_LENGTH_ERROR_MESSAGE]
+    ]) ('유효하지 않은 경우 Error를 발생시킵니다.' , (name,password,age,phoneNumber,email,errorMessage) => {
+      const createUserDto = new CreateUserDto(name,password,age,phoneNumber,email)
+      if (errorMessage) {
+        expect(createUserDto.validate()).toThrowError(errorMessage)
+      } else {
+        expect(createUserDto.validate()).toReturn()
+      }
+
+    } )
   })
 });
