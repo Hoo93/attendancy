@@ -3,6 +3,8 @@ export class CreateUserDto {
 
   private MIN_PASSWORD_LENGTH = 6
   private MAX_PASSWORD_LENGTH = 12
+  private MIN_NAME_LENGTH = 3
+  private MAX_NAME_LENGTH = 8
 
   public readonly name: string;
   public readonly password: string;
@@ -22,7 +24,8 @@ export class CreateUserDto {
     return /^[가-힣a-zA-Z0-9]+$/.test(this.name);
   }
   validateNameLength() {
-    return
+    const nameLength = this.name.length
+    return nameLength >= this.MIN_NAME_LENGTH && nameLength <= this.MAX_NAME_LENGTH
   }
 
   validatePassword():Boolean {
