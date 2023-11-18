@@ -17,7 +17,21 @@ describe("CreateUserDto 테스트", () => {
       const shortName = '상후'
       const createUserDto = new CreateUserDto(shortName, password, age, phoneNumber, email);
       expect(createUserDto.validateNameLength()).toBe(false)
+    })
 
+    it("이름이 8글자 초과인 경우 false 반환" ,()=> {
+      const longName = '이것은너무긴이름입니다.'
+      const createUserDto = new CreateUserDto(longName, password, age, phoneNumber, email);
+      expect(createUserDto.validateNameLength()).toBe(false)
+    })
+
+    it.each([
+        ["적절한이름",true],
+        ["짧음",false],
+        ["이런이름은너무길지?",false]
+    ]) ('이름이 %s인 경우 %p 반환', (name,expected) => {
+      const createUserDto = new CreateUserDto(name, password, age, phoneNumber, email);
+      expect(createUserDto.validateNameLength()).toBe(expected)
     })
   })
 
