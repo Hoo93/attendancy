@@ -23,7 +23,7 @@ export class CreateUserDto {
   validateName():Boolean {
     return /^[가-힣a-zA-Z0-9]+$/.test(this.name);
   }
-  validateNameLength() {
+  validateNameLength():Boolean {
     const nameLength = this.name.length
     return nameLength >= this.MIN_NAME_LENGTH && nameLength <= this.MAX_NAME_LENGTH
   }
@@ -32,9 +32,13 @@ export class CreateUserDto {
     return /^(?=.*?[a-zA-Z])(?=.*?\d)(?=.*?[!@#$%^&*]).{6,13}$/.test(this.password);
   }
 
-  validatePasswordLength() {
+  validatePasswordLength():Boolean {
     const passwordLength = this.password.length
     return passwordLength >= this.MIN_PASSWORD_LENGTH && passwordLength <= this.MAX_PASSWORD_LENGTH
+  }
+
+  validateEmail() {
+    return
   }
 }
 
