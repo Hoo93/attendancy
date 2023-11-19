@@ -133,6 +133,21 @@ describe("CreateUserDto 테스트", () => {
     })
   })
 
+  describe("validatePhoneNumber 메소드 테스트", () => {
+    it.each([
+      ["010-8098-1398", true],
+      ["011-8098-1398", true],
+      ["011-267-3785", true],
+      ["011-26-3785", false],
+      ["011-267735", false],
+      ["01080981398", false],
+      ["011-no-string", true]
+    ])("핸드폰번호가 %s인 경우 %p 반환", (phoneNumber, expected) => {
+      const createUserDto = new CreateUserDto(name, password, age, phoneNumber, email)
+      expect(createUserDto.validatePhoneNumber()).toBe(expected)
+    })
+  })
+
   describe("validate 메소드 테스트", () => {
     let INVALID_NAME_LENGTH_ERROR_MESSAGE = `사용자 이름은 ${MIN_NAME_LENGTH} 이상 ${MAX_NAME_LENGTH} 이어야 합니다`;
     let INVALID_NAME_ERROR_MESSAGE = `사용자 이름은 한글,영어,숫자만 사용 가능합니다.`;

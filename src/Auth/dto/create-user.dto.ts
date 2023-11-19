@@ -46,6 +46,10 @@ export class CreateUserDto {
     return /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/.test(this.email)
   }
 
+  validatePhoneNumber() {
+    return
+  }
+
   validate(): void {
     if (!this.validateNameLength()) {
       throw new Error(this.INVALID_NAME_LENGTH_ERROR_MESSAGE);
