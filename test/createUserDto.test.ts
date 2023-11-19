@@ -155,7 +155,6 @@ describe("CreateUserDto 테스트", () => {
       } else {
         expect(() => createUserDto.validate()).not.toThrow()
       }
-
-    } )
+    })
   })
 });

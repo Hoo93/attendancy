@@ -5,6 +5,11 @@ export class CreateUserDto {
   private MAX_PASSWORD_LENGTH = 12
   private MIN_NAME_LENGTH = 3
   private MAX_NAME_LENGTH = 8
+  private INVALID_NAME_LENGTH_ERROR_MESSAGE = `사용자 이름은 ${MIN_NAME_LENGTH} 이상 ${MAX_NAME_LENGTH} 이어야 합니다`;
+  private INVALID_NAME_ERROR_MESSAGE = `사용자 이름은 한글,영어,숫자만 사용 가능합니다.`;
+  private INVALID_PASSWORD_LENGTH_ERROR_MESSAGE = `비밀번호 길이는 ${MIN_PASSWORD_LENGTH} 이상 ${MAX_PASSWORD_LENGTH} 이어야 합니다`
+  private INVALID_PASSWORD_ERROR_MESSAGE = '비밀번호는 영어,숫자,특수기호를 1개 이상 포함해야 합니다.'
+  private INVALID_EMAIL_ERROR_MESSAGE = '이메일 주소가 유효하지 않습니다.'
 
   public readonly name: string;
   public readonly password: string;
@@ -43,21 +48,20 @@ export class CreateUserDto {
 
   validate(): void {
     if (!this.validateNameLength()) {
-      throw Error(`사용자 이름은 ${MIN_NAME_LENGTH} 이상 ${MAX_NAME_LENGTH} 이어야 합니다`)
+      throw new Error(this.INVALID_NAME_LENGTH_ERROR_MESSAGE);
     }
     if (!this.validateName()) {
-      throw Error ('사용자 이름은 한글,영어,숫자만 사용 가능합니다.')
+      throw new Error(this.INVALID_NAME_ERROR_MESSAGE);
     }
     if (!this.validatePasswordLength()) {
-      throw new Error(`비밀번호 길이는 ${MIN_PASSWORD_LENGTH} 이상 ${MAX_PASSWORD_LENGTH} 이어야 합니다`);
+      throw new Error(this.INVALID_PASSWORD_LENGTH_ERROR_MESSAGE);
     }
     if (!this.validatePassword()) {
-      throw new Error('비밀번호는 영어,숫자,특수기호를 1개 이상 포함해야 합니다.');
+      throw new Error(this.INVALID_PASSWORD_ERROR_MESSAGE);
     }
     if (!this.validateEmail()) {
-      throw new Error('이메일 주소가 유효하지 않습니다.');
+      throw new Error(this.INVALID_EMAIL_ERROR_MESSAGE);
     }
-    return
   }
 }
 
