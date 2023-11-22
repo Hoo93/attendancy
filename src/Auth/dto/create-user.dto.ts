@@ -1,25 +1,28 @@
+import {
+  INVALID_EMAIL_ERROR_MESSAGE,
+  INVALID_NAME_ERROR_MESSAGE,
+  INVALID_NAME_LENGTH_ERROR_MESSAGE,
+  INVALID_PASSWORD_ERROR_MESSAGE,
+  INVALID_PASSWORD_LENGTH_ERROR_MESSAGE,
+  MAX_NAME_LENGTH,
+  MAX_PASSWORD_LENGTH,
+  MIN_NAME_LENGTH,
+  MIN_PASSWORD_LENGTH
+} from "../const";
 
 export class CreateUserDto {
 
-  private MIN_PASSWORD_LENGTH = 6
-  private MAX_PASSWORD_LENGTH = 12
-  private MIN_NAME_LENGTH = 3
-  private MAX_NAME_LENGTH = 8
-  private INVALID_NAME_LENGTH_ERROR_MESSAGE = `사용자 이름은 ${MIN_NAME_LENGTH} 이상 ${MAX_NAME_LENGTH} 이어야 합니다`;
-  private INVALID_NAME_ERROR_MESSAGE = `사용자 이름은 한글,영어,숫자만 사용 가능합니다.`;
-  private INVALID_PASSWORD_LENGTH_ERROR_MESSAGE = `비밀번호 길이는 ${MIN_PASSWORD_LENGTH} 이상 ${MAX_PASSWORD_LENGTH} 이어야 합니다`
-  private INVALID_PASSWORD_ERROR_MESSAGE = '비밀번호는 영어,숫자,특수기호를 1개 이상 포함해야 합니다.'
-  private INVALID_EMAIL_ERROR_MESSAGE = '이메일 주소가 유효하지 않습니다.'
-
-  public readonly name: string;
+  public readonly id: string;
   public readonly password: string;
-  public readonly age: number;
-  public readonly phoneNumber: string;
-  public readonly email: string;
+  public readonly name: string;
+  public readonly age: number | null;
+  public readonly phoneNumber: string | null;
+  public readonly email: string | null;
 
-  constructor(name: string, password: string, age: number, phoneNumber: string, email: string) {
-    this.name = name;
+  constructor(id: string, password: string, name: string, age: number | null, phoneNumber: string, email: string) {
+    this.id = id;
     this.password = password;
+    this.name = name;
     this.age = age;
     this.phoneNumber = phoneNumber;
     this.email = email;
@@ -30,7 +33,7 @@ export class CreateUserDto {
   }
   validateNameLength():Boolean {
     const nameLength = this.name.length
-    return nameLength >= this.MIN_NAME_LENGTH && nameLength <= this.MAX_NAME_LENGTH
+    return nameLength >= MIN_NAME_LENGTH && nameLength <= MAX_NAME_LENGTH
   }
 
   validatePassword():Boolean {
@@ -39,39 +42,35 @@ export class CreateUserDto {
 
   validatePasswordLength():Boolean {
     const passwordLength = this.password.length
-    return passwordLength >= this.MIN_PASSWORD_LENGTH && passwordLength <= this.MAX_PASSWORD_LENGTH
+    return passwordLength >= MIN_PASSWORD_LENGTH && passwordLength <= MAX_PASSWORD_LENGTH
   }
 
   validateEmail():Boolean {
     return /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/.test(this.email)
   }
 
-  validatePhoneNumber() {
-    return
+  validatePhoneNumber(): Boolean {
+    return /^$/?.test(this.phoneNumber)
   }
 
   validate(): void {
     if (!this.validateNameLength()) {
-      throw new Error(this.INVALID_NAME_LENGTH_ERROR_MESSAGE);
+      throw new Error(INVALID_NAME_LENGTH_ERROR_MESSAGE);
     }
     if (!this.validateName()) {
-      throw new Error(this.INVALID_NAME_ERROR_MESSAGE);
+      throw new Error(INVALID_NAME_ERROR_MESSAGE);
     }
     if (!this.validatePasswordLength()) {
-      throw new Error(this.INVALID_PASSWORD_LENGTH_ERROR_MESSAGE);
+      throw new Error(INVALID_PASSWORD_LENGTH_ERROR_MESSAGE);
     }
     if (!this.validatePassword()) {
-      throw new Error(this.INVALID_PASSWORD_ERROR_MESSAGE);
+      throw new Error(INVALID_PASSWORD_ERROR_MESSAGE);
     }
     if (!this.validateEmail()) {
-      throw new Error(this.INVALID_EMAIL_ERROR_MESSAGE);
+      throw new Error(INVALID_EMAIL_ERROR_MESSAGE);
     }
   }
 }
 
 export default CreateUserDto;
-export const MIN_PASSWORD_LENGTH = 3
-export const MAX_PASSWORD_LENGTH = 12
-export const MIN_NAME_LENGTH = 3
-export const MAX_NAME_LENGTH = 8
 
