@@ -1,4 +1,4 @@
-import { Database } from "./\bdatabase";
+import {Database} from "./database";
 
 export interface RepositoryInterface<T> {
   create(data: T): Promise<T>;
@@ -8,7 +8,7 @@ export interface RepositoryInterface<T> {
   update(id: number, data: Partial<T>): Promise<boolean>;
 }
 
-class Repository<T> implements RepositoryInterface<T> {
+abstract class Repository<T> {
   async executeQuery(query: string) {
     const conn = await Database.getConnection();
     try {
@@ -22,7 +22,7 @@ class Repository<T> implements RepositoryInterface<T> {
     }
   }
 
-  async create(data: T): Promise<T> {
+  async create(data: any): Promise<T> {
     throw new Error("create method not implemented");
   }
 
@@ -34,11 +34,11 @@ class Repository<T> implements RepositoryInterface<T> {
     throw new Error("findOneById method not implemented");
   }
 
-  async update(id: number, data: Partial<T>): Promise<boolean> {
+  async update(id: number, data: Partial<T>): Promise<number> {
     throw new Error("update method not implemented");
   }
 
-  async delete(id: number): Promise<boolean> {
+  async delete(id: number): Promise<number> {
     throw new Error("delete method not implemented");
   }
 }
