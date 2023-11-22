@@ -7,70 +7,96 @@ import {
   MAX_NAME_LENGTH,
   MAX_PASSWORD_LENGTH,
   MIN_NAME_LENGTH,
-  MIN_PASSWORD_LENGTH
-} from "../const";
+  MIN_PASSWORD_LENGTH,
+} from '../const'
+import User from '../../User/user'
 
 export class CreateUserDto {
+  public readonly password: string
+  public readonly name: string
+  public readonly phoneNumber: string
+  public readonly age: number | null
+  public readonly email: string | null
 
-  public readonly id: string;
-  public readonly password: string;
-  public readonly name: string;
-  public readonly age: number | null;
-  public readonly phoneNumber: string | null;
-  public readonly email: string | null;
-
-  constructor(id: string, password: string, name: string, age: number | null, phoneNumber: string, email: string) {
-    this.id = id;
-    this.password = password;
-    this.name = name;
-    this.age = age;
-    this.phoneNumber = phoneNumber;
-    this.email = email;
+  constructor(
+    password: string,
+    name: string,
+    phoneNumber: string,
+    age?: number,
+    email?: string
+  ) {
+    this.password = password
+    this.name = name
+    this.phoneNumber = phoneNumber
+    this.age = age ?? null
+    this.email = email ?? null
   }
 
-  validateName():Boolean {
-    return /^[가-힣a-zA-Z0-9]+$/.test(this.name);
+  public toEntity(): User {
+    const user = new User(
+      this.password,
+      this.name,
+      this.phoneNumber,
+      this.age,
+      this.email
+    )
+    return user
   }
-  validateNameLength():Boolean {
+
+  public validate(): void {
+    if (!this.validateNameLength()) {
+      throw new Error(INVALID_NAME_LENGTH_ERROR_MESSAGE)
+    }
+    if (!this.validateName()) {
+      throw new Error(INVALID_NAME_ERROR_MESSAGE)
+    }
+    if (!this.validatePasswordLength()) {
+      throw new Error(INVALID_PASSWORD_LENGTH_ERROR_MESSAGE)
+    }
+    if (!this.validatePassword()) {
+      throw new Error(INVALID_PASSWORD_ERROR_MESSAGE)
+    }
+    if (!this.validateEmail()) {
+      throw new Error(INVALID_EMAIL_ERROR_MESSAGE)
+    }
+  }
+
+  validateName(): Boolean {
+    return /^[가-힣a-zA-Z0-9]+$/.test(this.name)
+  }
+
+  validateNameLength(): Boolean {
     const nameLength = this.name.length
     return nameLength >= MIN_NAME_LENGTH && nameLength <= MAX_NAME_LENGTH
   }
 
-  validatePassword():Boolean {
-    return /^(?=.*?[a-zA-Z])(?=.*?\d)(?=.*?[!@#$%^&*]).{6,13}$/.test(this.password);
+  validatePassword(): Boolean {
+    return /^(?=.*?[a-zA-Z])(?=.*?\d)(?=.*?[!@#$%^&*]).{6,13}$/.test(
+      this.password
+    )
   }
 
-  validatePasswordLength():Boolean {
+  validatePasswordLength(): Boolean {
     const passwordLength = this.password.length
-    return passwordLength >= MIN_PASSWORD_LENGTH && passwordLength <= MAX_PASSWORD_LENGTH
+    return (
+      passwordLength >= MIN_PASSWORD_LENGTH &&
+      passwordLength <= MAX_PASSWORD_LENGTH
+    )
   }
 
-  validateEmail():Boolean {
+  validateEmail(): Boolean {
+    if (!this.email) {
+      return true
+    }
     return /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/.test(this.email)
   }
 
   validatePhoneNumber(): Boolean {
-    return /^$/?.test(this.phoneNumber)
-  }
-
-  validate(): void {
-    if (!this.validateNameLength()) {
-      throw new Error(INVALID_NAME_LENGTH_ERROR_MESSAGE);
+    if (!this.phoneNumber) {
+      return true
     }
-    if (!this.validateName()) {
-      throw new Error(INVALID_NAME_ERROR_MESSAGE);
-    }
-    if (!this.validatePasswordLength()) {
-      throw new Error(INVALID_PASSWORD_LENGTH_ERROR_MESSAGE);
-    }
-    if (!this.validatePassword()) {
-      throw new Error(INVALID_PASSWORD_ERROR_MESSAGE);
-    }
-    if (!this.validateEmail()) {
-      throw new Error(INVALID_EMAIL_ERROR_MESSAGE);
-    }
+    return /^01[01]{1}-\d{3,4}-\d{4}$/.test(this.phoneNumber)
   }
 }
 
-export default CreateUserDto;
-
+export default CreateUserDto
