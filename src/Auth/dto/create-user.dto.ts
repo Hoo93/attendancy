@@ -11,27 +11,31 @@ import {
 } from '../const'
 
 export class CreateUserDto {
-  public readonly id: string
-  public readonly password: string
-  public readonly name: string
-  public readonly phoneNumber: string
-  public readonly age?: number
-  public readonly email?: string
+  public id: string
+  public name: string
+  public password: string
+  public phoneNumber: string
+  public age?: number
+  public email?: string
 
   constructor(
     id: string,
-    password: string,
     name: string,
+    password: string,
     phoneNumber: string,
-    age?: number,
-    email?: string
+    options?: {
+      age?: number
+      email?: string
+    }
   ) {
     this.id = id
     this.password = password
     this.name = name
     this.phoneNumber = phoneNumber
-    this.age = age
-    this.email = email
+    if (options) {
+      this.age = options.age
+      this.email = options.email
+    }
   }
 
   public validate(): void {
@@ -87,6 +91,10 @@ export class CreateUserDto {
       return true
     }
     return /^01[01]{1}-\d{3,4}-\d{4}$/.test(this.phoneNumber)
+  }
+
+  validateId(): Boolean {
+    return /^[0-9a-zA-Z]{6,12}$/.test(this.id)
   }
 }
 
