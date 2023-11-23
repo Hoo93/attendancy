@@ -38,10 +38,28 @@ describe('CreateUserDto 테스트', () => {
   })
 
   describe('validateId 테스트', () => {
-    it('영어,숫자,특수기호로 이루어진 경우 true 반환', () => {
-      const id = 'properId93'
-      createUserDto.id = id
+    it('영어,숫자로 이루어진 경우 true 반환', () => {
+      const properId = 'properId93'
+      createUserDto.id = properId
       expect(createUserDto.validateId()).toBe(true)
+    })
+
+    it('영어,숫자로 이루어지지 않은 경우 false 반환', () => {
+      const improperId = 'properId93!'
+      createUserDto.id = improperId
+      expect(createUserDto.validateId()).toBe(false)
+    })
+
+    it('길이가 5이하인 경우 false 반환', () => {
+      const shortId = 'id123'
+      createUserDto.id = shortId
+      expect(createUserDto.validateId()).toBe(false)
+    })
+
+    it('길이가 12초과인 경우 false 반환', () => {
+      const longId = 'improper12345'
+      createUserDto.id = longId
+      expect(createUserDto.validateId()).toBe(false)
     })
   })
 
