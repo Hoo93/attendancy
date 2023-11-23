@@ -23,17 +23,6 @@ describe('CreateUserDto 테스트', () => {
     })
   })
 
-  // it('생성자를 사용하지 않고 dto 생성', () => {
-  //   const requestBody = {
-  //     id: 'testID',
-  //     name: 'test',
-  //     password: 'pwd',
-  //     phoneNumber: '010-8098-1398',
-  //     email: 'sksk8922@gmail.com',
-  //   }
-  //   const createUserDto = new CreateUserDto(...requestBody)
-  // })
-
   it('생성자를 통해 Dto 생성', () => {
     const createUserDto = new CreateUserDto(
       'testID',
@@ -46,6 +35,14 @@ describe('CreateUserDto 테스트', () => {
       }
     )
     expect(createUserDto.name).toBe('test')
+  })
+
+  describe('validateId 테스트', () => {
+    it('영어,숫자,특수기호로 이루어진 경우 true 반환', () => {
+      const id = 'properId93'
+      createUserDto.id = id
+      expect(createUserDto.validateId()).toBe(true)
+    })
   })
 
   describe('validateNameLength 테스트', () => {
