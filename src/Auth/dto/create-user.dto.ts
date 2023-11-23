@@ -1,5 +1,6 @@
 import {
   INVALID_EMAIL_ERROR_MESSAGE,
+  INVALID_ID_ERROR_MESSAGE,
   INVALID_NAME_ERROR_MESSAGE,
   INVALID_NAME_LENGTH_ERROR_MESSAGE,
   INVALID_PASSWORD_ERROR_MESSAGE,
@@ -53,6 +54,9 @@ export class CreateUserDto {
     }
     if (!this.validateEmail()) {
       throw new Error(INVALID_EMAIL_ERROR_MESSAGE)
+    }
+    if (!this.validateId()) {
+      throw new Error(INVALID_ID_ERROR_MESSAGE)
     }
   }
 
