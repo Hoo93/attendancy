@@ -9,38 +9,29 @@ import {
   MIN_NAME_LENGTH,
   MIN_PASSWORD_LENGTH,
 } from '../const'
-import User from '../../User/user'
 
 export class CreateUserDto {
+  public readonly id: string
   public readonly password: string
   public readonly name: string
   public readonly phoneNumber: string
-  public readonly age: number | null
-  public readonly email: string | null
+  public readonly age?: number
+  public readonly email?: string
 
   constructor(
+    id: string,
     password: string,
     name: string,
     phoneNumber: string,
     age?: number,
     email?: string
   ) {
+    this.id = id
     this.password = password
     this.name = name
     this.phoneNumber = phoneNumber
-    this.age = age ?? null
-    this.email = email ?? null
-  }
-
-  public toEntity(): User {
-    const user = new User(
-      this.password,
-      this.name,
-      this.phoneNumber,
-      this.age,
-      this.email
-    )
-    return user
+    this.age = age
+    this.email = email
   }
 
   public validate(): void {
