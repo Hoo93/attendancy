@@ -2,6 +2,8 @@ import express from 'express'
 import { Database } from './src/dbms/database'
 import { Dbconfig } from './src/dbms/database.option'
 import userRouter from './src/User/user.route'
+import cookieParser from 'cookie-parser'
+import ErrorHandler from './src/errorHandler'
 
 export class App {
   private readonly app: express.Application
@@ -16,6 +18,8 @@ export class App {
 
   private initializeMiddleware() {
     this.app.use(express.json())
+    this.app.use(cookieParser())
+    this.app.use(ErrorHandler)
   }
 
   private initializeRouter() {
