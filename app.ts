@@ -9,8 +9,13 @@ export class App {
   constructor(port: number, dbconfig: Dbconfig) {
     Database.initialize(dbconfig)
     this.app = express()
+    this.initializeMiddleware()
     this.initializeRouter()
     this.listen(port)
+  }
+
+  private initializeMiddleware() {
+    this.app.use(express.json())
   }
 
   private initializeRouter() {
